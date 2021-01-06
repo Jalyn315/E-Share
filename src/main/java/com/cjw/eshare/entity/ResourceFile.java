@@ -12,7 +12,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class File {
+public class ResourceFile {
     private Integer id;
     private Integer user_id;
     private String filename;
