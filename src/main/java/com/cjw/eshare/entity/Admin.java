@@ -17,7 +17,7 @@ import java.util.Date;
 public class Admin {
     private Integer id;
     private String admin_user;
-    private String pass;
+    private String admin_pass;
     private String admin_email;
     private Date login_at;
     private String login_ip;

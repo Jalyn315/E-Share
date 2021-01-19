@@ -17,7 +17,7 @@ class EshareApplicationTests {
 	UserDao userDao;
 	@Test
 	void contextLoads() {
-		System.out.println(userDao);
+		userDao.deleteUserById(5);
 	}
 
 }

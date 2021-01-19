@@ -1,10 +1,7 @@
 package com.cjw.eshare.dao;
 
 import com.cjw.eshare.entity.ResourceFile;
-import org.apache.ibatis.annotations.Delete;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Select;
-import org.apache.ibatis.annotations.Update;
+import org.apache.ibatis.annotations.*;
 
 import java.util.List;
 
@@ -12,6 +9,7 @@ import java.util.List;
  * @author cj.w
  * @date 2020/12/31 2:14
  */
+@Mapper
 public interface FileDao {
 
     @Insert("insert into files(user_id,filename,type_id,file_size,file_url,description,is_show,is_download, praise_amount, download_amount)" +
