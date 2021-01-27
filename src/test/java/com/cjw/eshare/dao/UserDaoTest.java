@@ -1,6 +1,7 @@
 package com.cjw.eshare.dao;
 
 import com.cjw.eshare.entity.User;
+import com.cjw.eshare.entity.UserExtend;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.slf4j.Logger;
@@ -9,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.junit4.SpringRunner;
 
-import javax.swing.*;
+
 import java.util.Date;
 import java.util.UUID;
 
@@ -116,6 +117,37 @@ public class UserDaoTest {
         }
     }
 
+    /**
+     * 添加个人信息
+     */
+    @Test
+    public void createUserInfo() {
+        UserExtend userInfo = new UserExtend();
+        userInfo.setUser_id(6);
+        userInfo.setBirthday(new Date());
+        userInfo.setDescription("I'm handsome boy");
+        userInfo.setRealname("cj.w");
+        userInfo.setSex("男");
+
+        if(userDao.findUserInfoById(userInfo.getUser_id()) != null) {
+
+        } else {
+            logger.info("插入一个用户数据：" + userInfo);
+            userDao.insertUserInfo(userInfo);
+        }
+    }
+
+
+    @Test
+    public void findUserByName() {
+        final String userName = "root";
+        User u = userDao.findUserByName(userName);
+        if(null != u) {
+            logger.info("查询到的用户如下:" + u.toString());
+        }else {
+            logger.info("不存在该用户！");
+        }
+    }
 
 
 }
