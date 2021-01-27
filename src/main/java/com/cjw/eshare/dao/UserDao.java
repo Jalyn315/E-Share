@@ -1,7 +1,7 @@
 package com.cjw.eshare.dao;
 
 import com.cjw.eshare.entity.User;
-import com.cjw.eshare.entity.User_extend;
+import com.cjw.eshare.entity.UserExtend;
 import org.apache.ibatis.annotations.*;
 
 /**
@@ -24,7 +24,7 @@ public interface UserDao {
      * @param userInfo
      */
     @Insert("insert into user_extends(user_id, realname, birthday, sex, description) value (#{user_id}, #{realname}, #{birthday}, #{sex}, #{description})")
-    void insertUserInfo(User_extend userInfo);
+    void insertUserInfo(UserExtend userInfo);
 
     /**
      *查询一个用户
@@ -55,8 +55,22 @@ public interface UserDao {
      * @param Password 密码
      * @return   用户登陆信息实体类
      */
+    @Deprecated
     @Select("select * from users where username = #{userName} and password = #{password}")
     User findUserByUNameAndPwd(@Param("userName") String userName, @Param("password") String Password);
+
+    /**
+     * 根据用户名获取用户
+     * @param userName 用户名
+     * @return
+     */
+    @Select("select * from users where username = #{userName}")
+    User findUserByName(@Param("userName") String userName);
+
+
+
+
+
 
 
     /**
@@ -65,7 +79,7 @@ public interface UserDao {
      * @return 用户信息实体对象
      */
     @Select("select * from users_extends where user_id = #{user_id}")
-    User_extend findUserInfoById(@Param("user_id") Integer userId);
+    UserExtend findUserInfoById(@Param("user_id") Integer userId);
 
     /**
      * 修改密碼

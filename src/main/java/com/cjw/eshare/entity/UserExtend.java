@@ -2,20 +2,23 @@ package com.cjw.eshare.entity;
 
 import lombok.*;
 
+import java.util.Date;
+
 /**
  * @author cj.w
- * @date 2020/12/30 22:23
+ * @date 2020/12/30 22:18
  */
+
 @Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class User_oauth {
+public class UserExtend {
     private Integer id;
     private Integer user_id;
-    private String oauth_type;
-    private String oauth_id;
-    private String union_id;
-    private String credential;
+    private String realname;
+    private String sex;
+    private Date birthday;
+    private String description;
 }
