@@ -2,6 +2,7 @@ package com.cjw.eshare.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -14,7 +15,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Admin {
+public class Admin implements Serializable {
     private Integer id;
     private String admin_user;
     private String admin_pass;

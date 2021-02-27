@@ -2,6 +2,7 @@ package com.cjw.eshare.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 @ToString
-public class Upload {
+public class Upload implements Serializable {
      private Integer id;
      private Integer user_id;
      private Integer file_id;

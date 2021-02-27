@@ -2,6 +2,8 @@ package com.cjw.eshare.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
+
 /**
  * @author cj.w
  * @date 2020/12/30 22:23
@@ -11,7 +13,7 @@ import lombok.*;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class UserOauth {
+public class UserOauth implements Serializable {
     private Integer id;
     private Integer user_id;
     private String oauth_type;

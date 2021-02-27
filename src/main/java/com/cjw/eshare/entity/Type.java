@@ -2,6 +2,7 @@ package com.cjw.eshare.entity;
 
 import lombok.*;
 
+import java.io.Serializable;
 import java.util.Date;
 
 /**
@@ -13,7 +14,7 @@ import java.util.Date;
 @AllArgsConstructor
 @NoArgsConstructor
 @ToString
-public class Type {
+public class Type implements Serializable {
     private Integer id;
     private String name;
     private Date create_at;
