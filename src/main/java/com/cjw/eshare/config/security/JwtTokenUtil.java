@@ -19,7 +19,7 @@ public class JwtTokenUtil {
      private static final String CLAIM_KEY_USERNAME = "sub";
      private static final String CLAIM_KEY_CREATED = "create"; //创建时间
 
-     @Value("${jwc.secret}")
+     @Value("${jwt.secret}")
      private String secret;
      @Value("${jwt.expiration}")
      private Long expiration;  //token 过期时间
@@ -43,9 +43,9 @@ public class JwtTokenUtil {
      */
     private String generateToken(Map<String, Object> claims) {
         return Jwts.builder()
-                .setClaims(claims)
+                .setClaims(claims)  //添加荷载
                 .setExpiration(generateExpirationDate())  //设置失效时间
-                .signWith(SignatureAlgorithm.ES512, secret)
+                .signWith(SignatureAlgorithm.HS512, secret)
                 .compact();
     }
 
