@@ -7,6 +7,7 @@ import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
+import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -41,6 +42,29 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     /**
+     * 放行的请求
+     * @param web
+     * @throws Exception
+     */
+    @Override
+    public void configure(WebSecurity web) throws Exception {
+        web.ignoring().antMatchers(
+                "/login",
+                "/admin/login",
+                "/logout",
+                "/css/**",
+                "/js/**",
+                "/index.html",
+                "favicon.icon",
+                "/doc.html",
+                "/webjars/**",
+                "/swagger-resources/**",
+                "/v2/api-docs/**",
+                "/captcha"
+        );
+    }
+
+    /**
      * 配置security
      * @param http
      * @throws Exception
@@ -55,10 +79,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
                 .authorizeRequests()
-                //允许登陆访问
-                .antMatchers("/login","/logout")
-                .permitAll()
-                //除了上面两个请求，所有请求都要认证才能响应
+                //所有请求都需要认证
                 .anyRequest()
                 .authenticated()
                 .and()

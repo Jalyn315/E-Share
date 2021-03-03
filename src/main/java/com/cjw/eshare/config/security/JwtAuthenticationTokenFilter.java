@@ -39,6 +39,7 @@ public class JwtAuthenticationTokenFilter extends OncePerRequestFilter {
 
         //获取请求头中的tokenHeader
         String authHeader = request.getHeader(tokenHeader);
+
         //存在token
         if (null != authHeader && authHeader.startsWith(tokenHead)) {
             String authToken = authHeader.substring(tokenHead.length());  //获取到请求头中的token
