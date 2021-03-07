@@ -1,7 +1,10 @@
 package com.cjw.eshare.config.security;
 
 import com.cjw.eshare.entity.Admin;
+import com.cjw.eshare.entity.User;
 import com.cjw.eshare.service.IAdminService;
+import com.cjw.eshare.service.IUserService;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,6 +29,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     private IAdminService adminService;
+
+    @Autowired
+    private IUserService userService;
+
     @Autowired
     private RestfulAccessDeniedHandler restfulAccessDeniedHandler;
     @Autowired
@@ -60,7 +67,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 "/webjars/**",
                 "/swagger-resources/**",
                 "/v2/api-docs/**",
-                "/captcha"
+                "/captcha",
+                "/register"
         );
     }
 
@@ -78,18 +86,17 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .sessionManagement()
                 .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
                 .and()
-                .authorizeRequests()
-                //所有请求都需要认证
+            .authorizeRequests()
+            //所有请求都需要认证
                 .anyRequest()
                 .authenticated()
                 .and()
                 //禁用缓存
-                .headers()
+            .headers()
                 .cacheControl();
 
         //添加jwt 登陆授权过滤器
         http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
-
         //添加自定义未授权和未登录结果返回
         http.exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)
@@ -97,13 +104,14 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     }
 
+    //TODO 确认此处是否应该这样添加两个身份的detail
     /**
-     * 重写userDetailsService() 更改了获取用户信息的方式
+     * 管理员的Details
      * @return
      */
-    @Override
+
     @Bean
-    public UserDetailsService userDetailsService() {
+    public UserDetailsService AdminDetailsService() {
         return username -> {
             Admin admin = adminService.getAdminByUserName(username);
             if (null != admin) {
@@ -112,6 +120,23 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             return null;
         };
     }
+
+    /**
+     * 普通用户的Details
+     * @return
+     */
+    @Bean
+    public UserDetailsService UserDetailsService() {
+        return username-> {
+            User user = userService.getUserByUserName(username);
+            if (null != user) {
+                return user;
+            }
+            return null;
+        };
+    }
+
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
