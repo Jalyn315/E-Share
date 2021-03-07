@@ -1,5 +1,6 @@
 package com.cjw.eshare.config.security;
 
+import com.cjw.eshare.constant.ErrorCode;
 import com.cjw.eshare.model.CRModel;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.security.core.AuthenticationException;
@@ -26,7 +27,7 @@ public class RestAuthorizationEntryPoint implements AuthenticationEntryPoint {
         response.setContentType("application/json");
         PrintWriter out = response.getWriter();
         CRModel model = CRModel.error("尚未登陆，请登陆");
-        model.setCode(401);
+        model.setCode(ErrorCode.NO_PERMISSION_ERR);
         out.write(new ObjectMapper().writeValueAsString(model));
         out.flush();
         out.close();
