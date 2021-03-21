@@ -23,7 +23,7 @@ public interface UserDao {
      *插入一个用户信息
      * @param userInfo
      */
-    @Insert("insert into user_extends(user_id, realname, birthday, sex, description) value (#{user_id}, #{realname}, #{birthday}, #{sex}, #{description})")
+    @Insert("insert into users_extends(user_id, realname, birthday, sex, description) value (#{user_id}, #{realname}, #{birthday}, #{sex}, #{description})")
     void insertUserInfo(UserExtend userInfo);
 
     /**
@@ -68,11 +68,6 @@ public interface UserDao {
     User findUserByName(@Param("userName") String userName);
 
 
-
-
-
-
-
     /**
      *  根据用户id 获取用户信息。
      * @param userId  用户id
@@ -90,4 +85,28 @@ public interface UserDao {
     @Update("update users set password = #{newPwd} where id = #{id}")
     Boolean changePassword(@Param("id") Integer id, @Param("newPwd") String newPwd);
 
+    /**
+     * 返回当前用户名的数量
+     * @param username
+     * @return
+     */
+    @Select("select count(*) from users where username = username")
+    Integer countOfUsername(@Param("username") String username);
+
+    /**
+     * 根据用户id获取密码
+     * @param user_id
+     * @return
+     */
+    @Select("select password from users where id = #{user_id}")
+    String findPasswordById(@Param("user_id") Integer user_id);
+
+    /**
+     *
+     * 更新用户信息user_extends
+     * @param userInfo
+     */
+    @Update("update users_extends set realname = #{realname}, birthday = #{birthday}, sex = " +
+            "#{sex}, description = #{description} where user_id = #{user_id}")
+    void updateUserInfoByUserId(UserExtend userInfo);
 }

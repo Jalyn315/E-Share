@@ -13,7 +13,7 @@ import java.util.List;
 public interface FileDao {
 
     @Insert("insert into files(user_id,filename,type_id,file_size,file_url,description,is_show,is_download, praise_amount, download_amount)" +
-            "value (#{user_id}, #{filename}, #{type_id}, #{file_size}, #{file_url}, #{description}, #{is_show}, #{is_download}, #{praise_amount}" +
+            "value (#{user_id}, #{filename}, #{type_id}, #{file_size}, #{file_url}, #{description}, #{is_show}, #{is_download}, #{praise_amount}," +
             "#{download_amount})")
     void createFile(ResourceFile file);
 
@@ -49,6 +49,6 @@ public interface FileDao {
     @Update("update files set download_amount = #{newAmount} where id = #{id}")
     void updateFileDownloadAmount(Integer id, Long newAmount);
 
-    //
-
+    @Select("select La")
+    Integer findLastFileId();
 }

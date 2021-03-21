@@ -28,4 +28,6 @@ public interface TypeDao {
     void updateTypeById(Type type);
 
 
+    @Select("select * from types where name = #{typeName}")
+    Type findByName(@Param("typeName") String typeName);
 }

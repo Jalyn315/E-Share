@@ -1,6 +1,11 @@
 server:
   port: 8080
+
 spring:
+  #配置应用程序名称
+  application:
+    name: eshare
+  #配置数据源
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/e_share?serverTimezone=UTC&useUnicode=true&characterEncoding=UTF-8
@@ -21,9 +26,34 @@ spring:
       connection-timeout: 30000
       #测试连接是否可用的查询语句
       connection-test-query: SELECT 1
+      #设置时间格式
+  mvc:
+    format:
+      date: yyyy-MM-dd HH:mm
+  #redis配置
+  redis:
+    #Redis数据库索引（默认为0）
+    database: 0
+    #Redis服务器地址
+    host: localhost
+    #Redis服务器连接端口
+    port: 6379
+    #Redis服务器连接密码
+    password:
+    jedis:
+      pool:
+        #连接池最大连接数（负数表示没有限制）
+        max-active: 8
+        #连接池中的最大阻塞等待时间（使用负数表示没有限制）
+        max-wait: 1ms
+        #连接池中的最大空闲连接
+        max-idle: 8
+        #连接池中的最小空闲连接
+        min-idle: 0
+    #连接超时时间
+    timeout: 5000
 
 #Mybatis-插件配置
-
 
 # Mybatis SQL 打印（方法接口所在包）
 logging:
@@ -37,6 +67,6 @@ jwt:
   #JWT 加解密使用的密钥
   secret: yeb-secret
   #JWT的超期限时间
-  expiration: 604800
+  expiration: 6048000
   #JWT 负载中拿到开头
   tokenHead: Bearer
