@@ -21,4 +21,7 @@ public class ErrorDescription {
     public static final String UPLOAD_FILE_ERR = "文件上传失败";
     public static final String DOWNLOAD_FILE_ERR = "文件下载失败，文件不存在或已被删除！";
     public static final String DOWNLOAD_FILE_ERR1 = "对不起，作者设置了权限，您无权下载该文件！";
+    public static final String GET_FILE_ERROR = "文件不存在！" ;
+    public static final String UPDATE_FILE_ERR = " 跟新失败，文件不存在!";
+    public static final String DEL_FILE_ERR = "删除失败，文件已丢失，请刷新！";
 }
