@@ -19,7 +19,12 @@ public class SuccessDescription {
     public static final String UPLOAD_FILE_SUCCESS = "文件上传成功！";
     public static final String DOWNLOAD_FILE_SUCCESS = "文件下载成功！";
 
-    public static final String UPDATE_FILE_SUCCESS = "更新成功！";
+    public static final String UPDATE_FILE_SUCCESS = "文件更新成功！";
     public static final String DEL_FILE_SUCCESS = "文件删除成功！";
     public static final String DEL_UPLOAD_SUCCESS = "文件上传记录删除成功!";
+
+    /*****************************收藏**************************************/
+    public static final String UPDATE_FAVORITE_SUCCESS = "收藏更新成功！";
+    public static final String DELETE_FAVORITE_SUCCESS = "收藏删除成功！";
+
 }

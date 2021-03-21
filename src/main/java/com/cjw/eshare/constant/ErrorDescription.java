@@ -24,4 +24,8 @@ public class ErrorDescription {
     public static final String GET_FILE_ERROR = "文件不存在！" ;
     public static final String UPDATE_FILE_ERR = " 跟新失败，文件不存在!";
     public static final String DEL_FILE_ERR = "删除失败，文件已丢失，请刷新！";
+    /*****************************用户收藏**************************************/
+    public static final String FIND_NO_FAVORITE = "该用户下还没有收藏！";
+    public static final String UPDATE_FAVORITE_ERR = "更新用户收藏失败！";
+    public static final String DELETE_FAVORITE_ERR = "收藏删除失败！";
 }
