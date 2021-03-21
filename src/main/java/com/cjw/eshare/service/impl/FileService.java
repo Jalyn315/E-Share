@@ -24,7 +24,6 @@ public class FileService implements IFileService {
     @Autowired
     private FileDao fileDao;
 
-//TODO 数量文件名称为UUID唯一性，对文件上传和更新数据库实现事务
     @Override
     @Transactional(propagation = Propagation.REQUIRED)
     public boolean uploadFile(MultipartFile file, ResourceFile newFile) {
@@ -47,7 +46,6 @@ public class FileService implements IFileService {
                     //创建文件实体类 从上传记录中获取相应的文件信息
                     //调用持久层接口 存入文件信息
                     fileDao.createFile(newFile);
-                    int i = 10 / 0;
                 } catch (Exception e) {
                     //如果发生了异常需要把已经上传成功的文件删除掉
                     File file1 = new File(fileSaveUrl + UUID_FileName);
@@ -69,4 +67,5 @@ public class FileService implements IFileService {
     public Integer getLastInsertFileId() {
         return fileDao.findLastFileId();
     }
+
 }

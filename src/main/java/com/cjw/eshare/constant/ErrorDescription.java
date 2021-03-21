@@ -14,7 +14,9 @@ public class ErrorDescription {
     public static final String CHANGE_PWD_ERR1 = "修改密码失败，请稍后在重试！";
     /********************文件类型***************************/
     public static final String CREATE_TYPE_ERR = "创建类型失败，改类型已存在！";
-    public static final String DEL_TYPE_ERROR = "删除失败，类型不存在！";
-    public static final String UPDATE_TYPE_ERROR = "更新失败，类型不存在！";
-    public static final String UPDATE_TYPE_ERROR1  = "更新失败，类型名已经存在！";
+    public static final String DEL_TYPE_ERR = "删除失败，类型不存在！";
+    public static final String UPDATE_TYPE_ERR = "更新失败，类型不存在！";
+    public static final String UPDATE_TYPE_ERR1  = "更新失败，类型名已经存在！";
+    /*********************文件上传****************************/
+    public static final String UPLOAD_FILE_ERR = "文件上传失败";
 }

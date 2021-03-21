@@ -58,4 +58,10 @@ public interface IUserService {
      * @param userInfo
      */
     CRModel updateUserInfo(UserExtend userInfo);
+
+    /**
+     * 获取当前登陆用户Id
+     * @return
+     */
+    Integer getCurrentUserId();
 }

@@ -49,6 +49,6 @@ public interface FileDao {
     @Update("update files set download_amount = #{newAmount} where id = #{id}")
     void updateFileDownloadAmount(Integer id, Long newAmount);
 
-    @Select("select La")
+    @Select("select last_insert_id()")
     Integer findLastFileId();
 }

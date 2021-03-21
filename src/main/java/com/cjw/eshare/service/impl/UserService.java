@@ -176,4 +176,13 @@ public class UserService implements IUserService {
         }
         return CRModel.success(SuccessDescription.UPDATE_USER_INFO_SUCCESS, userInfo);
     }
+
+    /**
+     * 获取当前登陆的用户id
+     * @return
+     */
+    @Override
+    public Integer getCurrentUserId() {
+        return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
+    }
 }

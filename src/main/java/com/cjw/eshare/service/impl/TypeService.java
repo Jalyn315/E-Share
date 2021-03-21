@@ -76,7 +76,7 @@ TypeService implements ITypeService {
             typeDao.deleteType(id);
             return CRModel.success(SuccessDescription.DEL_TYPE_SUCCESS);
         } else {
-            return CRModel.error(ErrorDescription.DEL_TYPE_ERROR);
+            return CRModel.error(ErrorDescription.DEL_TYPE_ERR);
         }
     }
 
@@ -90,12 +90,12 @@ TypeService implements ITypeService {
     public CRModel updateType(Integer id, String newTypeName) {
         if (null != typeDao.findById(id)) {
             if (isExitType(newTypeName)) {
-                return CRModel.error(ErrorDescription.UPDATE_TYPE_ERROR1);
+                return CRModel.error(ErrorDescription.UPDATE_TYPE_ERR1);
             }
             typeDao.updateTypeById(new Type(id, newTypeName, null, new Date() ));
-            return CRModel.success(SuccessDescription.UPDATE_USER_INFO_SUCCESS);
+            return CRModel.success(SuccessDescription.UPDATE_TYPE_SUCCESS);
         } else {
-            return CRModel.error(ErrorDescription.UPDATE_TYPE_ERROR);
+            return CRModel.error(ErrorDescription.UPDATE_TYPE_ERR);
         }
     }
 }
