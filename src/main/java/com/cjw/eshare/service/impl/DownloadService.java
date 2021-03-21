@@ -1,6 +1,9 @@
 package com.cjw.eshare.service.impl;
 
+import com.cjw.eshare.dao.DownloadDao;
+import com.cjw.eshare.entity.Download;
 import com.cjw.eshare.service.IDownloadService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 /**
@@ -9,4 +12,12 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class DownloadService implements IDownloadService {
+
+    @Autowired
+    private DownloadDao downloadDao;
+
+    @Override
+    public void createDownload(Download download) {
+        downloadDao.createDownloadRecord(download);
+    }
 }

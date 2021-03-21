@@ -17,5 +17,6 @@ public class SuccessDescription {
 
     /*****************************文件**************************************/
     public static final String UPLOAD_FILE_SUCCESS = "文件上传成功！";
+    public static final String DOWNLOAD_FILE_SUCCESS = "文件下载成功";
 
 }

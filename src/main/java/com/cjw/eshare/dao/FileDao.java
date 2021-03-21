@@ -27,7 +27,7 @@ public interface FileDao {
 
     //根据id查找文件
     @Select("select * from files where id = #{id}")
-    ResourceFile findFileById();
+    ResourceFile findFileById(Integer id);
 
     //查询全部文件
     @Select("select * from files")

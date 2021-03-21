@@ -23,6 +23,6 @@ public interface DownloadDao {
 
     @Select("select * from downloads")
     List<Download> findAllRecord();
-
+    //TODO 实现对下载记录的增删改查，与上传类似
     
 }
