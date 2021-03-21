@@ -38,8 +38,8 @@ public class UploadController {
 
     @ApiOperation(value = "根据用户id查询上传记录")
     @GetMapping("/get_user_upload/{id}")
-    public List<Upload> getUserUpload(@PathVariable("id") Integer id) {
-        return uploadService.getUserUpload(id);
+    public List<Upload> getUserUpload(@PathVariable("id") Integer user_id) {
+        return uploadService.getUserUpload(user_id);
     }
 
     @ApiOperation(value = "根据id删除文件上传记录")
@@ -59,7 +59,6 @@ public class UploadController {
     public CRModel deleteUploadByFileId(@PathVariable("file_id") Integer file_id) {
         return uploadService.deleteByFileId(file_id);
     }
-
 
 
 }

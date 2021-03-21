@@ -107,16 +107,19 @@ public class UploadService implements IUploadService {
 
     @Override
     public CRModel deleteByUserId(Integer user_id) {
-        return uploadDao.deleteByUserId(user_id);
+        uploadDao.deleteByUserId(user_id);
+        return CRModel.success(SuccessDescription.DEL_UPLOAD_SUCCESS);
     }
 
     @Override
     public CRModel deleteById(Integer id) {
-        return uploadDao.deleteById(id);
+        deleteById(id);
+        return CRModel.success(SuccessDescription.DEL_UPLOAD_SUCCESS);
     }
 
     @Override
     public CRModel deleteByFileId(Integer file_id) {
-        return uploadDao.deleteByFileId(file_id);
+        uploadDao.deleteByFileId(file_id);
+        return CRModel.success(SuccessDescription.DEL_UPLOAD_SUCCESS);
     }
 }

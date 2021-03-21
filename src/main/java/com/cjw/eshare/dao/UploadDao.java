@@ -2,10 +2,8 @@ package com.cjw.eshare.dao;
 
 import com.cjw.eshare.entity.Upload;
 import com.cjw.eshare.model.CRModel;
-import org.apache.ibatis.annotations.Insert;
-import org.apache.ibatis.annotations.Mapper;
-import org.apache.ibatis.annotations.Param;
-import org.apache.ibatis.annotations.Select;
+import org.apache.ibatis.annotations.*;
+import org.springframework.web.bind.annotation.PathVariable;
 
 import java.util.List;
 
@@ -24,12 +22,12 @@ public interface UploadDao {
     @Select("select * from uploads where user_id = #{user_id}")
     List<Upload> findUploadByUserId(@Param("user_id") Integer user_id);
 
+    @Delete("delete from uploads where user_id = #{user_id}")
+    void deleteByUserId(@Param("user_id") Integer user_id);
 
-    //TODO 对根据不同id实现对文件的删除
+    @Delete("delete from uploads where id = #{id}")
+    void deleteById(@Param("id") Integer id);
 
-    CRModel deleteByUserId(Integer user_id);
-
-    CRModel deleteById(Integer id);
-
-    CRModel deleteByFileId(Integer file_id);
+    @Delete("delete from uploads where file_id = #{file_id}")
+    void deleteByFileId(@Param("file_id") Integer file_id);
 }

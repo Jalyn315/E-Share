@@ -7,16 +7,18 @@ import com.cjw.eshare.dao.FileDao;
 import com.cjw.eshare.entity.Download;
 import com.cjw.eshare.entity.ResourceFile;
 import com.cjw.eshare.model.CRModel;
-import com.cjw.eshare.service.IDownloadService;
-import com.cjw.eshare.service.IFileService;
-import com.cjw.eshare.service.IUserService;
+import com.cjw.eshare.service.*;
 import com.cjw.eshare.utils.FileUtils;
 import com.sun.org.apache.bcel.internal.classfile.SourceFile;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.transaction.interceptor.TransactionAspectSupport;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.multipart.MultipartFile;
 
 import javax.servlet.http.HttpServletResponse;
@@ -24,7 +26,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 /**
  * @author cj.w
@@ -39,6 +43,11 @@ public class FileService implements IFileService {
     private IDownloadService downloadService;
     @Autowired
     private IUserService userService;
+    @Autowired
+    IUploadService uploadService;
+    @Autowired
+    IFavoriteService favoriteService;
+
 
 
     @Override
@@ -129,11 +138,98 @@ public class FileService implements IFileService {
             }
             in.close();
             out.close();
-            downloadService.createDownload(download);
+            fileDao.updateFileDownloadAmount(id, file.getDownload_amount() + 1); //更新下载次数
+            downloadService.createDownload(download);  //创建下载记录
         } catch (Exception e) {
             e.printStackTrace();
             TransactionAspectSupport.currentTransactionStatus().setRollbackOnly();
         }
-        return CRModel.success(SuccessDescription.DOWNLOAD_FILE_SUCCESS);
+        return null;
+    }
+
+    /**
+     * 根据id获取文件
+     * @param id
+     * @return
+     */
+    @Override
+    public CRModel getFileById(Integer id) {
+        ResourceFile file = fileDao.findFileById(id);
+        if (null != file) {
+            return CRModel.success("", file);
+        } else {
+            return CRModel.error(ErrorDescription.GET_FILE_ERROR);
+        }
+    }
+
+    /**
+     * 获取所有文件
+     * @return
+     */
+    @Override
+    public List<ResourceFile> getAllFiles() {
+        List<ResourceFile> files = fileDao.listFiles();
+        if (null != files) {
+            return files;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * 根据用户id获取文件
+     * @param user_id
+     * @return
+     */
+    @Override
+    public List<ResourceFile> getFileByUserId(Integer user_id) {
+        List<ResourceFile> files = fileDao.findFileByUserId(user_id);
+        if (null != files) {
+            return files;
+        } else {
+            return new ArrayList<>();
+        }
+    }
+
+    /**
+     * 更新文件权限
+     * @param id
+     * @param is_show
+     * @param is_download
+     * @return
+     */
+    @Override
+    public CRModel updateFilePermission(Integer id, Integer is_show, Integer is_download) {
+        ResourceFile file = fileDao.findFileById(id);
+        if (null == file) {
+            return CRModel.error(ErrorDescription.UPDATE_FILE_ERR);
+        } else {
+            fileDao.updateFilePermission(id, is_show, is_download);
+            return CRModel.success(SuccessDescription.UPDATE_FILE_SUCCESS);
+        }
+    }
+
+    /**
+     * 根据用户id删除文件
+     * @param id
+     * @return
+     */
+    @Override
+    @Transactional
+    public CRModel deleteFileById(Integer id) {
+
+        ResourceFile file = fileDao.findFileById(id);
+        File file1 = null;
+        if (null == file || !( file1 = new File(file.getFile_url() + file.getFilename())).exists()) {
+            return CRModel.error(ErrorDescription.DEL_FILE_ERR);
+        }
+        uploadService.deleteByFileId(id);
+        //TODO 删除下载记录表的信息
+//        downloadService.deleteByFileId(id);
+        //TODO 删除收藏表收藏的文件
+//        favoriteService.deleteByFileId(id);
+        fileDao.deleteById(id); //删除数据库文件信息
+        file1.delete(); //删除本地文件
+        return CRModel.success(SuccessDescription.DEL_FILE_SUCCESS);
     }
 }
