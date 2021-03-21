@@ -27,7 +27,6 @@ public interface TypeDao {
     @Update("update types set name = #{name}, update_at = #{update_at} where id = #{id}")
     void updateTypeById(Type type);
 
-
     @Select("select * from types where name = #{typeName}")
     Type findByName(@Param("typeName") String typeName);
 }

@@ -10,7 +10,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.LinkedList;
+import java.util.List;
 
 /**
  * @author cj.w
@@ -23,7 +26,11 @@ TypeService implements ITypeService {
     @Autowired
     private TypeDao typeDao;
 
-
+    /**
+     * 创建类型
+     * @param typeName
+     * @return
+     */
     @Override
     public CRModel createType(String typeName) {
         if(!isExitType(typeName)) {
@@ -38,10 +45,57 @@ TypeService implements ITypeService {
         }
     }
 
-
-
+    /**
+     * 判断类型是否存在
+     * @param typeName
+     * @return
+     */
     public boolean isExitType(String typeName) {
         return typeDao.findByName(typeName) == null ? false : true;
     }
 
+    /**
+     * 获取全部类型
+     * @return
+     */
+    @Override
+    public List<Type> getAllType() {
+        List<Type> typeList = new ArrayList<>();
+        typeList = typeDao.findAllType();
+        return typeList;
+    }
+
+    /**
+     * 删除文件类型
+     * @param id
+     * @return
+     */
+    @Override
+    public CRModel deleteType(Integer id) {
+        if (null != typeDao.findById(id)) {
+            typeDao.deleteType(id);
+            return CRModel.success(SuccessDescription.DEL_TYPE_SUCCESS);
+        } else {
+            return CRModel.error(ErrorDescription.DEL_TYPE_ERROR);
+        }
+    }
+
+    /**
+     * 更新文件名称
+     * @param id
+     * @param newTypeName
+     * @return
+     */
+    @Override
+    public CRModel updateType(Integer id, String newTypeName) {
+        if (null != typeDao.findById(id)) {
+            if (isExitType(newTypeName)) {
+                return CRModel.error(ErrorDescription.UPDATE_TYPE_ERROR1);
+            }
+            typeDao.updateTypeById(new Type(id, newTypeName, null, new Date() ));
+            return CRModel.success(SuccessDescription.UPDATE_USER_INFO_SUCCESS);
+        } else {
+            return CRModel.error(ErrorDescription.UPDATE_TYPE_ERROR);
+        }
+    }
 }

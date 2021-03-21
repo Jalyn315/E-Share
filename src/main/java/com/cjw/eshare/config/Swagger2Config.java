@@ -61,7 +61,7 @@ public class Swagger2Config {
     private List<SecurityContext> securityContexts() {
         //需要认证的路径
         List<SecurityContext> result = new ArrayList<>();
-        result.add(getContextByPath("/hello/.*"));
+        result.add(getContextByPath("^(?!auth).*$"));
         return result;
     }
 

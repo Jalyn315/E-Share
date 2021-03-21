@@ -1,10 +1,8 @@
 package com.cjw.eshare.config.security;
 
-import com.cjw.eshare.entity.Admin;
 import com.cjw.eshare.entity.User;
 import com.cjw.eshare.service.IAdminService;
 import com.cjw.eshare.service.IUserService;
-import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -96,7 +94,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .cacheControl();
 
         //添加jwt 登陆授权过滤器
-        http.addFilterBefore(jwtAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
+        http.addFilterBefore(jwtUserAuthenticationTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         //添加自定义未授权和未登录结果返回
         http.exceptionHandling()
                 .accessDeniedHandler(restfulAccessDeniedHandler)
@@ -110,23 +108,24 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
      * @return
      */
 
-    @Bean
-    public UserDetailsService AdminDetailsService() {
-        return username -> {
-            Admin admin = adminService.getAdminByUserName(username);
-            if (null != admin) {
-                return admin;
-            }
-            return null;
-        };
-    }
+//    @Bean
+//    public UserDetailsService AdminDetailsService() {
+//        return username -> {
+//            Admin admin = adminService.getAdminByUserName(username);
+//            if (null != admin) {
+//                return admin;
+//            }
+//            return null;
+//        };
+//    }
 
     /**
      * 普通用户的Details
      * @return
      */
+    @Override
     @Bean
-    public UserDetailsService UserDetailsService() {
+    public UserDetailsService userDetailsService() {
         return username-> {
             User user = userService.getUserByUserName(username);
             if (null != user) {
@@ -144,8 +143,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
     }
 
     @Bean
-    public JwtAuthenticationTokenFilter jwtAuthenticationTokenFilter() {
-        return new JwtAuthenticationTokenFilter();
+    public JwtUserAuthenticationTokenFilter jwtUserAuthenticationTokenFilter() {
+        return new JwtUserAuthenticationTokenFilter();
     }
 
 
