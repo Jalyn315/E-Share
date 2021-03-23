@@ -18,5 +18,5 @@ public class Favorite implements Serializable {
     private Integer id;
     private Integer user_id;
     private Integer file_id;
-    private Date create_time;
+    private Date create_at;
 }
