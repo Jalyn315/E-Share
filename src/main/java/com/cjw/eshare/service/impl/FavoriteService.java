@@ -8,10 +8,12 @@ import com.cjw.eshare.entity.User;
 import com.cjw.eshare.model.CRModel;
 import com.cjw.eshare.model.FavoriteModel;
 import com.cjw.eshare.service.IFavoriteService;
+import com.cjw.eshare.service.IUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -22,18 +24,16 @@ import java.util.List;
 public class FavoriteService implements IFavoriteService {
     @Autowired
     private FavoriteDao favoriteDao;
-
-    /**
-     * 获取当前登陆的用户的Id
-     * @return
-     */
-    private Integer getUserId() {
-        return ((User) SecurityContextHolder.getContext().getAuthentication().getPrincipal()).getId();
-    }
+    @Autowired
+    private IUserService userService;
 
     @Override
-    public CRModel createFavorite(FavoriteModel favoriteModel) {
-        Favorite favorite = new Favorite(null, favoriteModel.getUserId(),favoriteModel.getFileId(),favoriteModel.getCreatTime());
+    public CRModel createFavorite(Integer file_id) {
+        Favorite favorite = new Favorite();
+        favorite.setUser_id(userService.getCurrentUserId());
+        favorite.setFile_id(file_id);
+        favorite.setCreate_at(new Date());
+        //TODO 先判断当前文件是否存在，然后判断该文件是否已经被当当前用户收藏了，如果以被收藏侧调用删除接口。
         return favoriteDao.createFavorite(favorite) == 1
                 ?CRModel.success(SuccessDescription.UPDATE_FAVORITE_SUCCESS)
                 :CRModel.error(ErrorDescription.UPDATE_FAVORITE_ERR);
@@ -48,7 +48,7 @@ public class FavoriteService implements IFavoriteService {
 
     @Override
     public CRModel findAllByUserId() {
-        Integer id = getUserId();
+        Integer id = userService.getCurrentUserId();
         List<Favorite> userFavorite = null;
         if ((userFavorite = favoriteDao.findAllByUserId(id)) == null) {
             return CRModel.error(ErrorDescription.FIND_NO_FAVORITE);

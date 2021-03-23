@@ -17,11 +17,11 @@ public class FavoriteController {
     private FavoriteService favoriteService;
 
     @ApiOperation(value = "添加收藏")
-    @PostMapping("/add_user_favorite")
-    public CRModel addUserFavorite(@RequestBody FavoriteModel favoriteModel) { return favoriteService.createFavorite(favoriteModel); }
+    @PostMapping("/add_user_favorite/{file_id}")
+    public CRModel addUserFavorite(@PathVariable("file_id") Integer id) { return favoriteService.createFavorite(id); }
 
     @ApiOperation(value = "删除一个收藏")
-    @PostMapping("/delete_user_favorite{file_id}")
+    @PostMapping("/delete_user_favorite/{file_id}")
     public CRModel deleteUserFavorite(@PathVariable("file_id") Integer id) { return favoriteService.deleteFavorite(id); }
 
     @ApiOperation(value = "获取用户的收藏信息")
@@ -29,6 +29,6 @@ public class FavoriteController {
     public CRModel getUserFavoriteInfo() {return favoriteService.findAllByUserId();}
 
     @ApiOperation(value = "返回一个文件的收藏次数")
-    @PostMapping("/count_favorite_file{file_id}")
+    @PostMapping("/count_favorite_file/{file_id}")
     public Integer countFavoriteFile(@PathVariable("file_id") Integer id) { return favoriteService.findCountByFileId(id); }
 }

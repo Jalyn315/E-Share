@@ -10,9 +10,9 @@ import com.cjw.eshare.model.FavoriteModel;
 public interface IFavoriteService {
     /**
      * 创建一个用户收藏
-     * @param favoriteModel
+     * @param file_id
      */
-    CRModel createFavorite(FavoriteModel favoriteModel);
+    CRModel createFavorite(Integer file_id);
 
     /**
      * 根据用户 id 移除一个收藏

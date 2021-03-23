@@ -18,7 +18,7 @@ public interface FavoriteDao {
 
     //添加一个收藏
     //返回值依据主键是否自增，自增则返回受影响的行数(1)，不是自增则可能返回0
-    @Insert("insert into favorite(user_id, file_id, create_time) value (#{user_id}, #{file_id}, #{create_time})")
+    @Insert("insert into favorite(user_id, file_id, create_at) value (#{user_id}, #{file_id}, #{create_at})")
     Integer createFavorite(Favorite favorite);
 
     //移除一个收藏
