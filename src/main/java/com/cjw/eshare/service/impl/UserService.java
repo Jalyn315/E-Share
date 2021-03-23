@@ -74,7 +74,7 @@ public class UserService implements IUserService {
         String token = jwtTokenUtil.generateToken(userDetails);
         tokenMap.put("token", token);
         tokenMap.put("tokenHead", tokenHead);
-        return CRModel.success("登陆成功",tokenMap);
+        return CRModel.success(SuccessDescription.LOGIN_SUCCESS, tokenMap);
     }
 
     @Override
@@ -83,11 +83,11 @@ public class UserService implements IUserService {
 
          //注册判断输入的验证码是否正确
         if (!CaptchaUtils.verifyCaptcha(model.getCode(), request)) {
-            return CRModel.error(ErrorCode.CAPTCHA_ERR, "验证码输入不正确，请重新输入！");
+            return CRModel.error(ErrorCode.CAPTCHA_ERR, ErrorDescription.CAPTCHA_ERR);
         }
          //判断当前用户名是否已经注册
         if (userDao.countOfUsername(model.getUsername()) > 0) {
-            return CRModel.error(ErrorCode.HAS_USERNAME_ERR, "该用户名已经被注册，请更换用户名");
+            return CRModel.error(ErrorCode.HAS_USERNAME_ERR, ErrorDescription.HAS_USER_ERR);
         }
 
         User user = new User();
@@ -98,7 +98,7 @@ public class UserService implements IUserService {
         userDao.insertUser(user);
         user.setPassword("**********");
         logger.info(LoggerPrefix.FINEST + "注册成功\nuserInfo:" + user);
-        return CRModel.success("您已经注册成功，快去登陆吧！");
+        return CRModel.success(SuccessDescription.REGISTER_SUCCESS);
     }
 
     /**
