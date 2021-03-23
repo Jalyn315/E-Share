@@ -12,6 +12,7 @@ public class ErrorDescription {
     public static final String USERNAME_PWD_ERR = "用户名或者密码有误，请重新输入！";
     public static final String CHANGE_PWD_ERR = "修改密码失败，您输入的原密码有误！";
     public static final String CHANGE_PWD_ERR1 = "修改密码失败，请稍后在重试！";
+    public static final String HAS_USER_ERR = "该用户名已经被注册，请更换用户名";
     /********************文件类型***************************/
     public static final String CREATE_TYPE_ERR = "创建类型失败，改类型已存在！";
     public static final String DEL_TYPE_ERR = "删除失败，类型不存在！";
@@ -28,4 +29,6 @@ public class ErrorDescription {
     public static final String FIND_NO_FAVORITE = "该用户下还没有收藏！";
     public static final String UPDATE_FAVORITE_ERR = "更新用户收藏失败！";
     public static final String DELETE_FAVORITE_ERR = "收藏删除失败！";
+
+
 }
