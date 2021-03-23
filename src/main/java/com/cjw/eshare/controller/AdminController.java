@@ -59,4 +59,19 @@ public class AdminController {
     }
 
 
+
+    //TODO 获取全部的用户信息
+    //TODO 根据id删除用户（需要传用户id）
+    //TODO 根据id更修改用户密码（需要传用户id）
+    //TODO 根据id更新用户信息（需要传用户id）
+
+    //TODO 获取所有文件上传信息
+    //TODO 根据id删除文件上传信息
+    //TODO 获取所有下载信息
+    //TODO 根据id删除文件下载信息
+
+    //TODO 获取所有类型信息
+    //TODO 根据id删除一个类型，注意外键约束，
+
+
 }
