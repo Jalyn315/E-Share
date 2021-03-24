@@ -1,23 +1,26 @@
 package com.cjw.eshare.service.impl;
 
 import com.cjw.eshare.config.security.JwtTokenUtil;
+import com.cjw.eshare.constant.ErrorCode;
+import com.cjw.eshare.constant.ErrorDescription;
 import com.cjw.eshare.constant.SuccessDescription;
 import com.cjw.eshare.dao.AdminDao;
+import com.cjw.eshare.dao.UserDao;
 import com.cjw.eshare.entity.Admin;
+import com.cjw.eshare.entity.User;
 import com.cjw.eshare.model.CRModel;
-import com.cjw.eshare.service.IAdminService;
+import com.cjw.eshare.model.UserModel;
+import com.cjw.eshare.service.*;
 import com.cjw.eshare.utils.MD5Util;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
-import org.springframework.util.StringUtils;
 
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -31,6 +34,22 @@ public class AdminService implements IAdminService {
 //    private UserDetailsService userDetailsService;
     @Autowired
     private AdminDao adminDao;
+
+    @Autowired
+    private UserDao userDao;
+
+    @Autowired
+    private IFileService fileService;
+
+    @Autowired
+    private ITypeService typeService;
+
+    @Autowired
+    private IDownloadService downloadService;
+
+    @Autowired
+    private IUploadService uploadService;
+
     @Autowired
     private JwtTokenUtil jwtTokenUtil;
     @Value("${jwt.tokenHeader}")
@@ -87,4 +106,61 @@ public class AdminService implements IAdminService {
     public Admin getAdminByUserName(String username) {
         return adminDao.getAdminByName(username);
     }
+
+    @Override
+    public CRModel getAllUser() {
+        List<User> users = null;
+       return (users = adminDao.findAllUser()) == null
+                ?CRModel.error(ErrorDescription.FIND_NO_USER)
+                :CRModel.success("",users);
+    }
+
+    @Override
+    public CRModel getUser(Integer user_id) {
+        User user = null;
+       return (user = adminDao.getUser(user_id)) == null
+            ?CRModel.error(ErrorDescription.FIND_NO_USER)
+            :CRModel.success("",user);
+    }
+
+    @Override
+    public CRModel updateUserPasswordById(UserModel userModel) {
+        //先判断用户输入的旧密码是否正确
+        if (!MD5Util.md5Encryption(userModel.getOldPassword()).equals(userDao.findPasswordById(userModel.getUserId()))) {
+            return CRModel.error(ErrorCode.PWD_ERR, ErrorDescription.CHANGE_PWD_ERR);
+        }
+        return adminDao.updateUserPasswordById(userModel.getId(),userModel.getNewPassword()) == 1
+                ? CRModel.success(SuccessDescription.UPDATE_USER_PASSWORD_SUCCESS)
+                : CRModel.error(ErrorDescription.UPDATE_USER_PASSWORD_ERR);
+    }
+
+    @Override
+    public CRModel updateUserInfo(UserModel userModel) {
+        return adminDao.updateUserInfo(userModel) == 1
+                ? CRModel.success(SuccessDescription.UPDATE_USER_INFO_SUCCESS)
+                : CRModel.error(ErrorDescription.UPDATE_USER_INFO_ERR);
+    }
+
+    @Override
+    public CRModel getAllTypeInfo() {
+        return CRModel.success("",typeService.getAllType());
+    }
+
+    @Override
+    public CRModel deleteFileInfoById(Integer id) {
+        return CRModel.success("",downloadService.deleteDownloadById(id));
+    }
+
+    @Override
+    public CRModel getAllDownloadInfo() {
+        return downloadService.getAllDownloadInfo();
+    }
+
+
+    @Override
+    public CRModel deleteUploadInfoById(Integer id) {
+        return uploadService.deleteById(id);
+    }
+
+
 }

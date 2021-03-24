@@ -29,6 +29,14 @@ public class ErrorDescription {
     public static final String FIND_NO_FAVORITE = "该用户下还没有收藏！";
     public static final String UPDATE_FAVORITE_ERR = "更新用户收藏失败！";
     public static final String DELETE_FAVORITE_ERR = "收藏删除失败！";
+    /*****************************管理员操作用户**************************************/
+    public static final String FIND_NO_USER = "查无用户！";
+    public static final String UPDATE_USER_PASSWORD_ERR = "更新用户密码失败！";
+    public static final String UPDATE_USER_INFO_ERR = "更新用户信息失败！";
 
-
+    /*****************************上传**************************************/
+    public static final String DEL_UPLOAD_ERR = "删除上传信息失败!";
+    /*****************************下载**************************************/
+    public static final String FIND_NO_DOWNLOAD_INFO = "无下载信息！";
+    public static final String DEL_DOWNLOAD_ERR = "删除下载信息失败！";
 }

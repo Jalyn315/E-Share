@@ -29,6 +29,10 @@ public class SuccessDescription {
     /*****************************收藏**************************************/
     public static final String UPDATE_FAVORITE_SUCCESS = "收藏更新成功！";
     public static final String DELETE_FAVORITE_SUCCESS = "收藏删除成功！";
+    /*****************************管理员操作用户**************************************/
+    public static final String UPDATE_USER_PASSWORD_SUCCESS = "更新用户密码成功！";
 
 
+    /*****************************下载**************************************/
+    public static final String DEL_DOWNLOAD_SUCCESS = "删除下载信息成功！";
 }

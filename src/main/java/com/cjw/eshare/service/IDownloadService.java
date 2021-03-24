@@ -1,6 +1,7 @@
 package com.cjw.eshare.service;
 
 import com.cjw.eshare.entity.Download;
+import com.cjw.eshare.model.CRModel;
 
 /**
  * @author cj.w
@@ -8,4 +9,17 @@ import com.cjw.eshare.entity.Download;
  */
 public interface IDownloadService {
     void createDownload(Download download);
+
+    /**
+     * 获取所有下载信息
+     * @return
+     */
+    CRModel getAllDownloadInfo();
+
+    /**
+     * 根据 id 删除下载信息
+     * @param id
+     * @return
+     */
+    CRModel deleteDownloadById(Integer id);
 }

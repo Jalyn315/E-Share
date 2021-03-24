@@ -6,3 +6,6 @@ https://blog.csdn.net/jisuanjiguoba/article/details/79359439
 Hi SummerLv
     Please enter the following command on the command line in the e_share data to update the table fields.
      COMMANd: "alter table favorite change  create_time create_at timestamp"
+
+
+Hey, Jalyn !!! I Got it;

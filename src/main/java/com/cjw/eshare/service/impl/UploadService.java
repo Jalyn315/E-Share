@@ -113,8 +113,9 @@ public class UploadService implements IUploadService {
 
     @Override
     public CRModel deleteById(Integer id) {
-        deleteById(id);
-        return CRModel.success(SuccessDescription.DEL_UPLOAD_SUCCESS);
+        return uploadDao.deleteById(id) == 1
+                ?CRModel.success(SuccessDescription.DEL_UPLOAD_SUCCESS)
+                :CRModel.error(ErrorDescription.DEL_UPLOAD_ERR);
     }
 
     @Override

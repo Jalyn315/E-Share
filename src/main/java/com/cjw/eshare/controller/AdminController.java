@@ -3,15 +3,12 @@ package com.cjw.eshare.controller;
 import com.cjw.eshare.entity.Admin;
 import com.cjw.eshare.model.CRModel;
 import com.cjw.eshare.model.LoginModel;
+import com.cjw.eshare.model.UserModel;
 import com.cjw.eshare.service.IAdminService;
 import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
@@ -27,6 +24,7 @@ public class AdminController {
 
     @Autowired
     private IAdminService adminService;
+
 
 
     @ApiOperation(value = "登陆之后返回token")
@@ -59,18 +57,91 @@ public class AdminController {
     }
 
 
+    /**
+     * 获取全部的用户信息
+     */
+    @ApiOperation(value="获取全部用户")
+    @GetMapping("/get_all_user")
+    public CRModel getAllUser() {return adminService.getAllUser();}
 
-    //TODO 获取全部的用户信息
-    //TODO 根据id删除用户（需要传用户id）
-    //TODO 根据id更修改用户密码（需要传用户id）
-    //TODO 根据id更新用户信息（需要传用户id）
+    /**
+     * 根据id删除用户（需要传用户id）
+     * @param user_id
+     * @return
+     */
+    @ApiOperation(value="根据 id 查询用户")
+    @GetMapping("/get_user/{user_id}")
+    public CRModel getUser(@PathVariable("user_id") Integer user_id) {return adminService.getUser(user_id);}
 
-    //TODO 获取所有文件上传信息
-    //TODO 根据id删除文件上传信息
-    //TODO 获取所有下载信息
-    //TODO 根据id删除文件下载信息
+    /**
+     * 根据id修改用户密码（需要传用户id）
+      * @param userModel
+     * @return
+     */
+    @ApiOperation(value="根据 id 更新用户密码")
+    @PutMapping("/update_user_password")
+    public CRModel updateUserPasswordById(@RequestBody UserModel userModel) {return adminService.updateUserPasswordById(userModel);}
 
-    //TODO 获取所有类型信息
+    /**
+     * 根据id更新用户信息（需要传用户id）
+     * @param userModel
+     * @return
+     */
+    @ApiOperation(value="根据 id 更新用户信息")
+    @PutMapping("/update_user_info")
+    public CRModel updateUserInfo(@RequestBody UserModel userModel) {
+        //涉及多表查询
+        //需要返回更新后的结果
+        return adminService.updateUserInfo(userModel);
+    }
+
+    //----------------------------以上有一些为自己写的业务-----------------------
+
+
+
+    /**
+     * 根据id删除文件上传信息
+     * @param id
+     * @return
+     */
+    @ApiOperation(value="根据 id 删除文件上传信息")
+    @DeleteMapping("/delete_upload_info/{id}")
+    public CRModel deleteUploadInfo(@PathVariable("id") Integer id){
+        return adminService.deleteUploadInfoById(id);
+    }
+
+
+    /**
+     * 获取所有下载信息
+     * @return
+     */
+    @ApiOperation(value="获取所有下载信息")
+    @GetMapping("/get_all_download_info")
+    public CRModel getAllDownloadInfo(){
+        return adminService.getAllDownloadInfo();
+    }
+
+
+    /**
+     * 根据 id 删除文件下载信息
+     * @param id
+     * @return
+     */
+    @ApiOperation(value = "根据 id 删除文件下载信息")
+    @DeleteMapping("/delete_file_info/{id}")
+    public CRModel deleteFileInfoById(@PathVariable("id") Integer id) {
+        return adminService.deleteFileInfoById(id);
+    }
+
+    /**
+     * 获取所有类型信息
+     * @return
+     */
+    @ApiOperation(value = "获取所有文件类型信息")
+    @GetMapping("/get_all_type_info")
+    public CRModel getAllTypeInfo(){
+        return adminService.getAllTypeInfo();
+    }
     //TODO 根据id删除一个类型，注意外键约束，
 
 

@@ -19,7 +19,7 @@ public interface DownloadDao {
     void createDownloadRecord(Download download);
 
     @Delete("delete from downloads where id = #{id}")
-    void deleteDownloadRecordById(Integer id);
+    Integer deleteDownloadRecordById(Integer id);
 
     @Select("select * from downloads")
     List<Download> findAllRecord();

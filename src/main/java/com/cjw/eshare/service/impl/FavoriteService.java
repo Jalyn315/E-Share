@@ -33,7 +33,7 @@ public class FavoriteService implements IFavoriteService {
         favorite.setUser_id(userService.getCurrentUserId());
         favorite.setFile_id(file_id);
         favorite.setCreate_at(new Date());
-        //TODO 先判断当前文件是否存在，然后判断该文件是否已经被当当前用户收藏了，如果以被收藏侧调用删除接口。
+        //TODO 先判断当前文件是否存在，然后判断该文件是否已经被当前用户收藏了，如果已被收藏则调用删除接口。
         return favoriteDao.createFavorite(favorite) == 1
                 ?CRModel.success(SuccessDescription.UPDATE_FAVORITE_SUCCESS)
                 :CRModel.error(ErrorDescription.UPDATE_FAVORITE_ERR);

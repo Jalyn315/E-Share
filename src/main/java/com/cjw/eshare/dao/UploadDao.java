@@ -26,7 +26,7 @@ public interface UploadDao {
     void deleteByUserId(@Param("user_id") Integer user_id);
 
     @Delete("delete from uploads where id = #{id}")
-    void deleteById(@Param("id") Integer id);
+    Integer deleteById(@Param("id") Integer id);
 
     @Delete("delete from uploads where file_id = #{file_id}")
     void deleteByFileId(@Param("file_id") Integer file_id);
